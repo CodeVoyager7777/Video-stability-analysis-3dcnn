@@ -8,3 +8,4 @@ venv/
 # Datasets and data files
 dataset/
 Data/
+*.avi
