@@ -1,14 +1,26 @@
-# 🎯 Real-Time Optical Flow for Probe Trajectory Scoring
+# 🎯 Video Stability Analysis using Optical Flow and 3D CNN
 
-### Extracting Motion Patterns from Fetal Ultrasound (US)
+### Extracting Motion Patterns from Video Sequences
 
 ---
 
 ## 📌 Overview
 
-This project focuses on analyzing **probe movement in fetal ultrasound videos** using **Optical Flow** and **Deep Learning** techniques.
+This project analyzes motion patterns in video data and classifies stability using a combination of classical computer vision and deep learning techniques.
 
-The system computes motion-based **stability scores** and uses them to automatically generate labels, followed by training a **3D Convolutional Neural Network (3D CNN)** for classification of probe trajectory quality.
+The system computes motion-based stability scores using optical flow, generates labels automatically, and trains a 3D Convolutional Neural Network (3D CNN) to classify videos into stable and unstable categories.
+
+---
+
+## ❓ Problem Statement
+
+Raw video data is unstructured and does not directly provide information about motion stability.
+
+The objective of this project is to:
+
+* Extract meaningful motion information from video sequences
+* Quantify motion stability using feature engineering
+* Classify videos into stable and unstable categories
 
 ---
 
@@ -17,7 +29,7 @@ The system computes motion-based **stability scores** and uses them to automatic
 * 🎥 Video preprocessing and frame extraction
 * 🌊 Optical Flow-based motion analysis
 * 📊 Stability score computation
-* 🏷️ Automatic dataset labeling
+* 🏷️ Automatic dataset labeling (heuristic-based)
 * 🗂️ Dataset organization (stable vs unstable)
 * 🧠 3D CNN model for classification
 * 📈 Model training and evaluation
@@ -27,7 +39,7 @@ The system computes motion-based **stability scores** and uses them to automatic
 ## 🧠 Project Pipeline
 
 ```plaintext
-Raw Ultrasound Videos
+Raw Video Data
         ↓
 Optical Flow Analysis (main.py)
         ↓
@@ -49,7 +61,7 @@ Classification Accuracy
 ## 📁 Project Structure
 
 ```plaintext
-PBL-Project/
+video-stability-analysis-3dcnn/
 │
 ├── src/
 │   ├── main.py              # Optical flow + feature extraction
@@ -57,12 +69,17 @@ PBL-Project/
 │   ├── train.py            # Model training
 │   ├── data_loader.py      # Dataset loading
 │   ├── model_3dcnn.py      # 3D CNN model
+│   ├── preprocessing.py
+│   ├── optical_flow.py
+│   ├── feature_extraction.py
+│   ├── stability_index.py
+│   ├── visualization.py
 │
 ├── dataset/
 │   ├── stable/
 │   └── unstable/
 │
-├── data/
+├── Data/
 │   └── labels.xlsx
 │
 ├── Results/
@@ -77,8 +94,8 @@ PBL-Project/
 ## ⚙️ Installation
 
 ```bash
-git clone https://github.com/CodeVoyager7777/PBL-Project.git
-cd PBL-Project
+git clone https://github.com/CodeVoyager7777/video-stability-analysis-3dcnn.git
+cd video-stability-analysis-3dcnn
 python -m venv venv
 venv\Scripts\activate
 pip install -r requirements.txt
@@ -88,19 +105,19 @@ pip install -r requirements.txt
 
 ## ▶️ Usage
 
-### 1️⃣ Optical Flow Analysis
+### 1️⃣ Run Optical Flow + Feature Extraction
 
 ```bash
 python src/main.py
 ```
 
-### 2️⃣ Dataset Preparation
+### 2️⃣ Generate Labels & Organize Dataset
 
 ```bash
 python src/sort_dataset.py
 ```
 
-### 3️⃣ Model Training
+### 3️⃣ Train the Model
 
 ```bash
 python src/train.py
@@ -116,36 +133,57 @@ python src/train.py
 * Frames per video: `8`
 * Classes:
 
-  * Stable Probe Movement
-  * Unstable Probe Movement
+  * Stable Motion
+  * Unstable Motion
 
 ---
 
-## 💡 Core Idea
+## 🧠 Core Idea
 
-Instead of manual labeling, this system:
+Instead of relying on manual labeling, this project:
 
-> **Automatically generates labels using motion-based stability scores derived from optical flow analysis**
+> Automatically generates labels using motion-based stability scores derived from optical flow.
 
-This enables scalable and intelligent dataset creation.
+This enables scalable dataset creation for supervised learning.
 
 ---
 
-## 📈 Future Scope
+## 📊 Results
 
-* Real-time deployment in ultrasound systems
-* Integration with medical decision support
-* Improved motion feature extraction
-* Higher accuracy deep learning models
+* Achieved ~79% accuracy on test dataset
+* Model learns motion-based stability patterns from video sequences
+
+---
+
+## ⚠️ Limitations
+
+* **Heuristic Labeling:** Labels are generated using a mean-based threshold instead of ground-truth annotations.
+* **Threshold Sensitivity:** The threshold may not generalize well across different datasets.
+* **Limited Evaluation Metrics:** Performance is evaluated mainly using accuracy.
+* **No Model Comparison:** The model is not benchmarked against alternative approaches.
+
+---
+
+## 🚀 Future Scope
+
+* Improve labeling using annotated or semi-supervised data
+* Compare with alternative models (2D CNN, LSTM, classical ML)
+* Add advanced evaluation metrics (precision, recall, F1-score)
+* Improve model generalization and robustness
+
+---
+
+## 🛠️ Tech Stack
+
+* Python
+* OpenCV
+* NumPy & Pandas
+* PyTorch
+* Matplotlib
 
 ---
 
 ## 👨‍💻 Author
 
 Laksh Makkar
-
----
-
-## ⭐ Note
-
-This project demonstrates a complete pipeline combining **Computer Vision (Optical Flow)** and **Deep Learning (3D CNN)** for real-world medical video analysis.
+GitHub: https://github.com/CodeVoyager7777
